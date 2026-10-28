@@ -288,27 +288,30 @@ def zeitplaner():
 
 # ---------- Weboberfläche ----------
 
+STIL = """:root{--bg:#f5f6f8;--card:#fff;--fg:#1d2330;--mut:#667085;--line:#e3e6eb;--acc:#2563eb;--ok:#15803d;--err:#b91c1c}
+@media (prefers-color-scheme:dark){:root{--bg:#12151b;--card:#1b1f27;--fg:#e6e8ec;--mut:#98a1b3;--line:#2c323d;--acc:#60a5fa;--ok:#4ade80;--err:#f87171}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px}h1{font-size:22px;margin:0 0 4px}h2{font-size:16px;margin:0 0 12px}
+.mut{color:var(--mut);font-size:13px}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:16px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px 12px}
+label{display:block}.feld{margin:10px 0}.feld>span{display:block;font-size:13px;color:var(--mut);margin-bottom:3px}
+input[type=text],input[type=url],input[type=number],input[type=time],input[type=password],select{width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit}
+.zeile{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0 12px}
+button{padding:9px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}
+button.prim{background:var(--acc);border-color:var(--acc);color:#fff}.knoepfe{display:flex;flex-wrap:wrap;gap:8px}
+.hinweis{padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card)}
+.ok{color:var(--ok)}.err{color:var(--err)}ul{margin:0;padding-left:18px}li{margin:4px 0}
+a{color:var(--acc)}
+.tonne{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 2px;vertical-align:baseline}
+"""
+
 SEITE = """<!doctype html>
 <html lang="de"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Abfallkalender-Melder</title>
 <link rel="icon" type="image/png" href="/icon.png">
 <style>
-:root{{--bg:#f5f6f8;--card:#fff;--fg:#1d2330;--mut:#667085;--line:#e3e6eb;--acc:#2563eb;--ok:#15803d;--err:#b91c1c}}
-@media (prefers-color-scheme:dark){{:root{{--bg:#12151b;--card:#1b1f27;--fg:#e6e8ec;--mut:#98a1b3;--line:#2c323d;--acc:#60a5fa;--ok:#4ade80;--err:#f87171}}}}
-*{{box-sizing:border-box}}body{{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif}}
-main{{max-width:760px;margin:0 auto;padding:24px 16px}}h1{{font-size:22px;margin:0 0 4px}}h2{{font-size:16px;margin:0 0 12px}}
-.mut{{color:var(--mut);font-size:13px}}.card{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px;margin:16px 0}}
-.grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px 12px}}
-label{{display:block}}.feld{{margin:10px 0}}.feld>span{{display:block;font-size:13px;color:var(--mut);margin-bottom:3px}}
-input[type=text],input[type=url],input[type=number],input[type=time],input[type=password],select{{width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit}}
-.zeile{{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0 12px}}
-button{{padding:9px 16px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg);font:inherit;cursor:pointer}}
-button.prim{{background:var(--acc);border-color:var(--acc);color:#fff}}.knoepfe{{display:flex;flex-wrap:wrap;gap:8px}}
-.hinweis{{padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card)}}
-.ok{{color:var(--ok)}}.err{{color:var(--err)}}ul{{margin:0;padding-left:18px}}li{{margin:4px 0}}
-.tonne{{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 2px;vertical-align:baseline}}
-</style></head><body><main>
+{stil}</style></head><body><main>
 <h1>Abfallkalender-Melder</h1>
 <div class="mut">Meldet am Vortag um {melde_uhrzeit} Uhr, welche Tonne raus muss. Letzte Prüfung: {letzte} – {ergebnis}</div>
 {meldung}
@@ -350,7 +353,8 @@ button.prim{{background:var(--acc);border-color:var(--acc);color:#fff}}.knoepfe{
 <button type="submit" formaction="/neu_laden">PDF neu laden</button>
 <button type="submit" formaction="/zuruecksetzen">Gemeldete zurücksetzen</button></div>
 </form>
-<div class="card"><h2>Nächste Abfuhrtermine</h2>{vorschau}</div>
+<div class="card"><h2>Nächste Abfuhrtermine</h2>{vorschau}
+<div class="mut" style="margin-top:10px">Nur die Liste, z. B. für ein Tablet an der Wand: <a href="/liste">/liste</a> (Anzahl wählbar: <code>/liste?anzahl=5</code>)</div></div>
 <div class="card"><h2>Einstellungen sichern &amp; übertragen</h2>
 <form method="get" action="/export" class="feld">
 <label><input type="checkbox" name="geheim" value="1" checked> Zugangsdaten mitexportieren (API-Token, SMTP-Passwort)</label>
@@ -372,6 +376,42 @@ def e(wert):
 def wann(tag, heute):
     tage = (tag - heute).days
     return "heute" if tage == 0 else "morgen" if tage == 1 else f"in {tage} Tagen"
+
+
+def termin_liste(cfg, kal, heute, anzahl, gemeldet=None):
+    """HTML-Liste der nächsten Abfuhrtermine; mit `gemeldet` werden versendete markiert."""
+    if not cfg["bezirk"]:
+        return '<div class="mut">Noch kein Bezirk gewählt.</div>'
+    punkte = []
+    for tag, termine in termine_fuer(cfg, kal).items():
+        if tag < heute or len(punkte) >= anzahl:
+            continue
+        erledigt = gemeldet is not None and all(schluessel(tag, t["art"]) in gemeldet for t in termine)
+        marke = ' <span class="ok">✓ gemeldet</span>' if erledigt else ""
+        arten = " ".join(
+            f'<span class="tonne" style="background:{FARBEN[t["art"]]}"></span>{e(TONNEN[t["art"]][0])}'
+            + (" <b>!</b>" if t["verschoben"] else "") for t in termine)
+        punkte.append(f"<li><b>{WOCHENTAGE[tag.weekday()]}, {tag:%d.%m.%Y}</b> ({wann(tag, heute)}){marke}<br>{arten}</li>")
+    if not punkte:
+        return '<div class="mut">Keine weiteren Termine im Kalender – neuen PDF-Link eintragen.</div>'
+    return f"<ul>{''.join(punkte)}</ul>"
+
+
+LISTE = """<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="refresh" content="1800">
+<title>Abfuhrtermine</title>
+<link rel="icon" type="image/png" href="/icon.png">
+<style>{stil}</style></head><body><main>
+<div class="card"><h2>Nächste Abfuhrtermine</h2><div class="mut" style="margin:-8px 0 10px">{wo}</div>{liste}</div>
+</main></body></html>"""
+
+
+def rendere_liste(anzahl):
+    cfg, kal = lade_config(), lade_kalender()
+    wo = f"{cfg['strasse']} (Bezirk {cfg['bezirk']})" if cfg["strasse"] else f"Bezirk {cfg['bezirk']}"
+    return LISTE.format(stil=STIL, wo=e(wo), liste=termin_liste(cfg, kal, jetzt(cfg).date(), anzahl))
 
 
 def rendere(meldung=""):
@@ -398,20 +438,7 @@ def rendere(meldung=""):
         for w, t in (("starttls", "STARTTLS (587)"), ("ssl", "SSL/TLS (465)"), ("none", "keine"))
     )
 
-    if not cfg["bezirk"]:
-        vorschau = '<div class="mut">Noch kein Bezirk gewählt.</div>'
-    else:
-        punkte = []
-        for tag, termine in termine_fuer(cfg, kal).items():
-            if tag < heute or len(punkte) >= 10:
-                continue
-            erledigt = all(schluessel(tag, t["art"]) in gemeldet for t in termine)
-            marke = ' <span class="ok">✓ gemeldet</span>' if erledigt else ""
-            arten = " ".join(
-                f'<span class="tonne" style="background:{FARBEN[t["art"]]}"></span>{e(TONNEN[t["art"]][0])}'
-                + (" <b>!</b>" if t["verschoben"] else "") for t in termine)
-            punkte.append(f"<li><b>{WOCHENTAGE[tag.weekday()]}, {tag:%d.%m.%Y}</b> ({wann(tag, heute)}){marke}<br>{arten}</li>")
-        vorschau = f"<ul>{''.join(punkte)}</ul>" if punkte else '<div class="mut">Keine weiteren Termine im Kalender – neuen PDF-Link eintragen.</div>'
+    vorschau = termin_liste(cfg, kal, heute, 10, gemeldet)
 
     if meldung:
         klasse = "err" if meldung.startswith("Fehler") else "ok"
@@ -419,7 +446,7 @@ def rendere(meldung=""):
 
     bezirk_wert = f"{cfg['strasse']} ({cfg['bezirk']})" if cfg["strasse"] else cfg["bezirk"]
     return SEITE.format(
-        meldung=meldung, tonnen=tonnen, strassen=strassen, sicherheit=sicherheit, vorschau=vorschau,
+        stil=STIL, meldung=meldung, tonnen=tonnen, strassen=strassen, sicherheit=sicherheit, vorschau=vorschau,
         kalender_info=kalender_info, bezirk_wert=e(bezirk_wert),
         letzte=e(status["letzte_pruefung"] or "noch nie"), ergebnis=e(status["letztes_ergebnis"] or "–"),
         pdf_url=e(cfg["pdf_url"]), melde_uhrzeit=e(cfg["melde_uhrzeit"]), zeitzone=e(cfg["zeitzone"]),
@@ -530,6 +557,10 @@ class Handler(BaseHTTPRequestHandler):
             mit_geheim = urllib.parse.parse_qs(url.query).get("geheim") == ["1"]
             name = f"abfallkalender-melder-{date.today():%Y-%m-%d}.json"
             self.antworte(exportiere(mit_geheim), "application/json; charset=utf-8", name)
+            return
+        if url.path == "/liste":
+            anzahl = urllib.parse.parse_qs(url.query).get("anzahl", ["10"])[0]
+            self.antworte(rendere_liste(max(1, min(100, int(anzahl))) if anzahl.isdigit() else 10))
             return
         if url.path != "/":
             self.send_error(404)

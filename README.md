@@ -27,6 +27,7 @@ Oder ohne Bauen: `docker run -d -p 8643:8080 -v ./data:/data ghcr.io/vdite/abfal
 - Täglich zur Meldezeit wird geprüft, ob **morgen** etwas abgeholt wird; jede Abfuhr wird **einmal** gemeldet. War der Container zur Meldezeit aus, wird am selben Tag nachgeholt.
 - Verschobene Termine (im PDF mit „!“ markiert, z. B. nach Feiertagen) sind in der Meldung gekennzeichnet.
 - Zwei Wochen vor dem letzten Termin kommt einmalig eine Erinnerung, den Link zum Kalender des Folgejahres einzutragen.
+- Unter `http://<zima-ip>:8643/liste` gibt es nur die Terminliste, ohne Einstellungen (z. B. für ein Tablet an der Wand; lädt sich alle 30 Minuten neu). Anzahl per `?anzahl=5`.
 - Die Weboberfläche hat keinen Login – nur im Heimnetz betreiben, nicht ins Internet freigeben.
 
 Testlauf ohne Versand: `python app/abfallkalender.py --trocken --datum 2026-10-29`
