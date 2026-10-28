@@ -1,0 +1,47 @@
+name: abfallkalender-melder
+services:
+  abfallkalender-melder:
+    image: ghcr.io/vdite/abfallkalender-melder:latest
+    container_name: abfallkalender-melder
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "8643"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/abfallkalender-melder
+        target: /data
+    x-casaos:
+      ports:
+        - container: "8080"
+          description:
+            en_us: Web UI
+            de_de: Weboberfläche
+      volumes:
+        - container: /data
+          description:
+            en_us: Settings, calendar and state
+            de_de: Einstellungen, Kalender und Status
+
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: abfallkalender-melder
+  author: self
+  developer: self
+  category: Utilities
+  title:
+    en_us: Abfallkalender-Melder
+  tagline:
+    en_us: Waste collection reminders for Rietberg
+    de_de: Erinnerung an die Müllabfuhr in Rietberg
+  description:
+    en_us: Reads the Rietberg waste calendar PDF and notifies the evening before which bin goes out, via Pushover or SMTP.
+    de_de: Liest den Abfallkalender (PDF) der Stadt Rietberg und meldet am Vortag per Pushover oder E-Mail, welche Tonne raus muss.
+  scheme: http
+  hostname: ""
+  port_map: "8643"
+  index: /
+  icon: https://raw.githubusercontent.com/vdite/abfallkalender-melder/main/assets/icon.png

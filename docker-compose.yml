@@ -1,0 +1,10 @@
+services:
+  abfallkalender-melder:
+    build: .
+    image: abfallkalender-melder:latest
+    container_name: abfallkalender-melder
+    restart: unless-stopped
+    ports:
+      - "8643:8080"
+    volumes:
+      - ./data:/data
