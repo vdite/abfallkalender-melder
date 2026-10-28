@@ -4,6 +4,11 @@ Liest den [Abfallkalender der Stadt Rietberg](https://www.rietberg.de/rathaus/ab
 Alles wird über die Weboberfläche eingestellt (Port **8643**): PDF-Link, Straße bzw. Bezirk (z. B. „Gartenstraße“ → 1.2), gewünschte Tonnen, Uhrzeit, Versandkanal.
 Einstellungen, ausgelesener Kalender und Status liegen in `/data` (`config.json`, `kalender.json`, `status.json`).
 
+<p>
+  <img src="assets/screenshots/weboberflaeche.jpg" alt="Weboberfläche" width="420">
+  <img src="assets/screenshots/liste.jpg" alt="Terminliste unter /liste" width="420">
+</p>
+
 ## ZimaOS
 
 1. **App Store → Benutzerdefinierte App installieren → Import** und den Inhalt von
