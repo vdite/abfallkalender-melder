@@ -11,7 +11,7 @@ Einstellungen, ausgelesener Kalender und Status liegen in `/data` (`config.json`
 
 ## Warum?
 
-Für Rietberg gibt es die App „Tonnenticker Pro“ des Entsorgers. Bei uns hat sie aber oft nicht zuverlässig erinnert: Mal kam die Benachrichtigung gar nicht, mal erst, als die Tonne schon hätte draußen stehen müssen.
+Für Rietberg gibt es eine Erinnerungs-App des Entsorgers. Bei uns hat sie aber oft nicht zuverlässig erinnert: Mal kam die Benachrichtigung gar nicht, mal erst, als die Tonne schon hätte draußen stehen müssen.
 
 Der offizielle Abfallkalender als PDF ist dagegen immer da und immer aktuell, auch mit verschobenen Terminen nach Feiertagen. Dieser Melder liest genau dieses PDF, läuft auf dem eigenen Homeserver und meldet sich jeden Abend vor einer Abfuhr, ohne Cloud-Konto und ohne App, die das Handy im Hintergrund beendet.
 
