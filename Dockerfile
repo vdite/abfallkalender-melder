@@ -10,6 +10,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt tzdata
 COPY app/ .
 COPY assets/icon.png .
+COPY LICENSE .
 
 RUN mkdir -p /data
 VOLUME ["/data"]

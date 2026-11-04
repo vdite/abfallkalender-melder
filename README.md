@@ -42,3 +42,7 @@ Oder ohne Bauen: `docker run -d -p 8643:8080 -v ./data:/data ghcr.io/vdite/abfal
 - Die Weboberfläche hat keinen Login – nur im Heimnetz betreiben, nicht ins Internet freigeben.
 
 Testlauf ohne Versand: `python app/abfallkalender.py --trocken --datum 2026-10-29`
+
+## Lizenz
+
+MIT – siehe [LICENSE](LICENSE).
